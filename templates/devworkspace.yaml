@@ -1,0 +1,50 @@
+apiVersion: workspace.devfile.io/v1alpha2
+kind: DevWorkspace
+metadata:
+  annotations:
+    che.eclipse.org/che-editor: che-incubator/che-code/latest
+    che.eclipse.org/devfile: |
+      schemaVersion: 2.2.0
+      metadata:
+        generateName: empty
+    che.eclipse.org/devfile-source: |
+      url:
+        location: >-
+          {{ .Values.urls.cheDashboard }}/dashboard/devfile-registry/devfiles/empty.yaml
+      factory:
+        params: >-
+          che-editor=che-incubator/che-code/latest&storageType=per-user&url={{ .Values.urls.cheDashboard }}/dashboard/devfile-registry/devfiles/empty.yaml
+  name: {{ .Values.devworkspace.name }}
+spec:
+  contributions:
+  - kubernetes:
+      name: {{ .Values.devworkspaceTemplate.name }}
+    name: editor
+  routingClass: {{ .Values.devworkspace.routingClass }}
+  started: {{ .Values.devworkspace.started }}
+  template:
+    attributes:
+      controller.devfile.io/devworkspace-config:
+        name: devworkspace-config
+        namespace: {{ .Values.devworkspace.namespace }}
+      controller.devfile.io/scc: container-build
+      controller.devfile.io/storage-type: per-user
+    components:
+    - container:
+        cpuLimit: {{ .Values.resources.tooling.cpuLimit }}
+        cpuRequest: {{ .Values.resources.tooling.cpuRequest }}
+        env:
+        - name: HOST_USERS
+          value: "true"
+        - name: VSCODE_DEFAULT_WORKSPACE
+          value: "/projects"
+        image: {{ .Values.images.tooling }}
+        memoryLimit: {{ .Values.resources.tooling.memoryLimit }}
+        memoryRequest: {{ .Values.resources.tooling.memoryRequest }}
+        volumeMounts:
+        - name: cli-storage
+          path: /home/user/.local
+      name: opencode-tooling
+    - name: cli-storage
+      volume:
+        ephemeral: false

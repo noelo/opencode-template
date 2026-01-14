@@ -1,0 +1,134 @@
+# Default values for opencode-devworkspace chart
+
+# DevWorkspace configuration
+devworkspace:
+  name: opencode-devspace
+  namespace: openshift-operators
+  routingClass: che
+  started: false
+
+# DevWorkspace Template configuration
+devworkspaceTemplate:
+  name: opencode-devspace-template
+  generation: 1
+
+# Container resources
+resources:
+  tooling:
+    cpuLimit: 4000m
+    cpuRequest: 1000m
+    memoryLimit: 6G
+    memoryRequest: 500Mi
+  cheCodeInjector:
+    cpuLimit: 500m
+    cpuRequest: 30m
+    memoryLimit: 256Mi
+    memoryRequest: 32Mi
+  cheCodeRuntime:
+    cpuLimit: 500m
+    cpuRequest: 30m
+    memoryLimit: 1024Mi
+    memoryRequest: 256Mi
+
+# Images
+images:
+  tooling: quay.io/noeloc/opencode:latest
+  cheCodeInjector: registry.redhat.io/devspaces/code-rhel9@sha256:7b68bf06abf4f2b948d21ffa82401b44f26965b093e4875653344ae2b7fe46c8
+  cheCodeRuntime: registry.redhat.io/devspaces/udi-rhel9@sha256:bb5baa05f316944ca6df56ad718c368b248e8f4b2488551549b1b13c4ed5844b
+
+# URLs and configuration
+urls:
+  cheDashboard: https://devspaces.apps.example.com
+  chePluginRegistry: https://devspaces.apps.example.com/plugin-registry/v3
+  chePluginRegistryInternal: http://plugin-registry.openshift-operators.svc:8080/v3
+  clusterConsole: https://console-openshift-console.apps.example.com
+  clusterConsoleTitle: OpenShift console
+  openvsxRegistry: ""
+
+# OpenCode ConfigMap configuration
+opencodeConfig:
+  autoupdate: false
+  instructions:
+    - "AGENTS.md"
+    - "docs/guidelines.md"
+  enabledProviders:
+    - "RH-MAAS"
+    - "LLAMASTACK"
+    - "opencode-zen"
+  mcp:
+    remoteSkills:
+      url: "{env:CLAUDE_SKILLS_MCP_URL}"
+      enabled: true
+    context7:
+      url: "https://mcp.context7.com/mcp"
+      apiKey: "{env:CONTEXT7_API_KEY}"
+    ghGrep:
+      url: "https://mcp.grep.app"
+  keybinds:
+    commandList: "ctrl+l"
+  provider:
+    openrouter:
+      models:
+        "moonshotai/kimi-k2":
+          options:
+            provider:
+              order:
+                - "baseten"
+              allowFallbacks: false
+    opencodeZen:
+      baseURL: "https://opencode.ai/zen/v1"
+      models:
+        bigPickle:
+          name: "big-pickle"
+        glm47Free:
+          name: "glm-4.7-free"
+        grokCode:
+          name: "grok-code"
+    rhMaas:
+      baseURL: "{env:RH_MAAS_URL}"
+      apiKey: "{env:RH_MAAS_Llama_3_2_3B_Instruct_API_KEY}"
+      models:
+        llama32_3b:
+          name: "llama-3-2-3b"
+          limit:
+            context: 120000
+            output: 120000
+    llamastack:
+      baseURL: "{env:OPENCODE_LLS_URL}"
+      models:
+        llama4Scout:
+          name: "llama-4-scout-17b-16e-w4a16"
+          limit:
+            context: 120000
+            output: 120000
+        phi4:
+          name: "microsoft/phi-4"
+          limit:
+            context: 120000
+            output: 120000
+
+# Environment variables for secret
+envSecrets:
+  CLAUDE_SKILLS_MCP_URL: "placeholder"
+  CONTEXT7_API_KEY: "placeholder"
+  OPENCODE_LLS_URL: "placeholder"
+  RH_MAAS_Llama_3_2_3B_Instruct_API_KEY: "placeholder"
+  RH_MAAS_URL: "placeholder"
+  OPENAI_API_KEY: "placeholder"
+
+# VS Code Editor Config
+vscodeConfig:
+  extensions:
+    - "dbaeumer.vscode-eslint"
+    - "github.vscode-pull-request-github"
+  settings:
+    gitDefaultCloneDirectory: "/projects/"
+    windowHeader: "OpenCode Agentic AI Command Line Interface"
+    windowCommandCenter: false
+    terminalIntegratedDefaultLocation: "editor"
+    terminalIntegratedConfirmOnExit: "always"
+    terminalIntegratedCwd: "/projects"
+    terminalIntegratedDefaultProfileLinux: "bash (2)"
+    workbenchColorCustomizations:
+      titleBarActiveBackground: "#CCA700"
+      titleBarActiveForeground: "#ffffff"

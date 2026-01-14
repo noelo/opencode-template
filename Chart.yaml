@@ -1,0 +1,6 @@
+apiVersion: v2
+name: opencode-devworkspace
+description: A Helm chart for deploying OpenCode DevWorkspace resources
+type: application
+version: 0.1.0
+appVersion: "latest"

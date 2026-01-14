@@ -1,0 +1,112 @@
+apiVersion: workspace.devfile.io/v1alpha2
+kind: DevWorkspaceTemplate
+metadata:
+  annotations:
+    che.eclipse.org/components-update-policy: managed
+    che.eclipse.org/plugin-registry-url: {{ .Values.urls.cheDashboard }}/dashboard/api/editors/devfile?che-editor=che-incubator/che-code/latest
+  generation: {{ .Values.devworkspaceTemplate.generation }}
+  name: {{ .Values.devworkspaceTemplate.name }}
+spec:
+  commands:
+  - apply:
+      component: che-code-injector
+    id: init-container-command
+  - exec:
+      commandLine: nohup /checode/entrypoint-volume.sh > /checode/entrypoint-logs.txt
+        2>&1 &
+      component: che-code-runtime-description
+    id: init-che-code-command
+  components:
+  - container:
+      command:
+      - /entrypoint-init-container.sh
+      cpuLimit: {{ .Values.resources.cheCodeInjector.cpuLimit }}
+      cpuRequest: {{ .Values.resources.cheCodeInjector.cpuRequest }}
+      env:
+      - name: CHE_DASHBOARD_URL
+        value: {{ .Values.urls.cheDashboard }}
+      - name: CHE_PLUGIN_REGISTRY_URL
+        value: {{ .Values.urls.chePluginRegistry }}
+      - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+        value: {{ .Values.urls.chePluginRegistryInternal }}
+      - name: CLUSTER_CONSOLE_URL
+        value: {{ .Values.urls.clusterConsole }}
+      - name: CLUSTER_CONSOLE_TITLE
+        value: {{ .Values.urls.clusterConsoleTitle }}
+      - name: OPENVSX_REGISTRY_URL
+        value: {{ .Values.urls.openvsxRegistry }}
+      image: {{ .Values.images.cheCodeInjector }}
+      memoryLimit: {{ .Values.resources.cheCodeInjector.memoryLimit }}
+      memoryRequest: {{ .Values.resources.cheCodeInjector.memoryRequest }}
+      sourceMapping: /projects
+      volumeMounts:
+      - name: checode
+        path: /checode
+    name: che-code-injector
+  - attributes:
+      app.kubernetes.io/component: che-code-runtime
+      app.kubernetes.io/part-of: che-code.eclipse.org
+      controller.devfile.io/container-contribution: true
+    container:
+      cpuLimit: {{ .Values.resources.cheCodeRuntime.cpuLimit }}
+      cpuRequest: {{ .Values.resources.cheCodeRuntime.cpuRequest }}
+      endpoints:
+      - attributes:
+          cookiesAuthEnabled: true
+          discoverable: false
+          type: main
+          urlRewriteSupported: true
+        exposure: public
+        name: che-code
+        protocol: https
+        secure: true
+        targetPort: 3100
+      - attributes:
+          discoverable: false
+          urlRewriteSupported: false
+        exposure: public
+        name: code-redirect-1
+        protocol: https
+        targetPort: 13131
+      - attributes:
+          discoverable: false
+          urlRewriteSupported: false
+        exposure: public
+        name: code-redirect-2
+        protocol: https
+        targetPort: 13132
+      - attributes:
+          discoverable: false
+          urlRewriteSupported: false
+        exposure: public
+        name: code-redirect-3
+        protocol: https
+        targetPort: 13133
+      env:
+      - name: CHE_DASHBOARD_URL
+        value: {{ .Values.urls.cheDashboard }}
+      - name: CHE_PLUGIN_REGISTRY_URL
+        value: {{ .Values.urls.chePluginRegistry }}
+      - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+        value: {{ .Values.urls.chePluginRegistryInternal }}
+      - name: CLUSTER_CONSOLE_URL
+        value: {{ .Values.urls.clusterConsole }}
+      - name: CLUSTER_CONSOLE_TITLE
+        value: {{ .Values.urls.clusterConsoleTitle }}
+      - name: OPENVSX_REGISTRY_URL
+        value: {{ .Values.urls.openvsxRegistry }}
+      image: {{ .Values.images.cheCodeRuntime }}
+      memoryLimit: {{ .Values.resources.cheCodeRuntime.memoryLimit }}
+      memoryRequest: {{ .Values.resources.cheCodeRuntime.memoryRequest }}
+      sourceMapping: /projects
+      volumeMounts:
+      - name: checode
+        path: /checode
+    name: che-code-runtime-description
+  - name: checode
+    volume: {}
+  events:
+    postStart:
+    - init-che-code-command
+    preStart:
+    - init-container-command

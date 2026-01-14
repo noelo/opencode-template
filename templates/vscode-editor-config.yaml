@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vscode-editor-configurations
+data:
+  extensions.json: |
+{{ toJson (dict "recommendations" .Values.vscodeConfig.extensions) | indent 4 }}
+  settings.json: |
+{{ toJson .Values.vscodeConfig.settings | indent 4 }}
+immutable: false
