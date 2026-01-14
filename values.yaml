@@ -132,3 +132,16 @@ vscodeConfig:
     workbenchColorCustomizations:
       titleBarActiveBackground: "#CCA700"
       titleBarActiveForeground: "#ffffff"
+
+# Git SSH Key Secret configuration
+gitSshKey:
+  name: git-ssh-key
+  mountPath: /etc/ssh/
+  sshKey: ""
+  sshKeyPub: ""
+  passphrase: ""
+  sshConfig: |+
+    host *
+      IdentityFile /etc/ssh/dwo_ssh_key
+      StrictHostKeyChecking = no
+  enabled: false
