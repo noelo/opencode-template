@@ -55,6 +55,7 @@ opencodeConfig:
     - "RH-MAAS"
     - "LLAMASTACK"
     - "opencode-zen"
+    - "openrouter"
   mcp:
     remoteSkills:
       url: "{env:CLAUDE_SKILLS_MCP_URL}"
@@ -66,6 +67,8 @@ opencodeConfig:
       url: "https://mcp.grep.app"
   keybinds:
     commandList: "ctrl+l"
+  model: opencode-zen/big-pickle
+  small_model: RH-MAAS/llama-4-scout-17b-16e-w4a16
   provider:
     openrouter:
       models:
@@ -114,7 +117,7 @@ envSecrets:
   OPENCODE_LLS_URL: "placeholder"
   RH_MAAS_Llama_3_2_3B_Instruct_API_KEY: "placeholder"
   RH_MAAS_URL: "placeholder"
-  OPENAI_API_KEY: "placeholder"
+  OPENROUTER_API_KEY: "placeholder"
 
 # VS Code Editor Config
 vscodeConfig:
