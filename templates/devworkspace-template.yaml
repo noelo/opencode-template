@@ -33,8 +33,10 @@ spec:
         value: {{ .Values.urls.clusterConsole }}
       - name: CLUSTER_CONSOLE_TITLE
         value: {{ .Values.urls.clusterConsoleTitle }}
+      {{- if .Values.urls.openvsxRegistry }}
       - name: OPENVSX_REGISTRY_URL
-        value: {{ .Values.urls.openvsxRegistry }}
+      value: {{ .Values.urls.openvsxRegistry }}
+      {{- end }}
       image: {{ .Values.images.cheCodeInjector }}
       memoryLimit: {{ .Values.resources.cheCodeInjector.memoryLimit }}
       memoryRequest: {{ .Values.resources.cheCodeInjector.memoryRequest }}
@@ -93,8 +95,10 @@ spec:
         value: {{ .Values.urls.clusterConsole }}
       - name: CLUSTER_CONSOLE_TITLE
         value: {{ .Values.urls.clusterConsoleTitle }}
+      {{- if .Values.urls.openvsxRegistry }}
       - name: OPENVSX_REGISTRY_URL
         value: {{ .Values.urls.openvsxRegistry }}
+      {{- end }}
       image: {{ .Values.images.cheCodeRuntime }}
       memoryLimit: {{ .Values.resources.cheCodeRuntime.memoryLimit }}
       memoryRequest: {{ .Values.resources.cheCodeRuntime.memoryRequest }}
