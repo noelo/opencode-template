@@ -65,19 +65,25 @@ opencodeConfig:
       apiKey: "{env:CONTEXT7_API_KEY}"
     ghGrep:
       url: "https://mcp.grep.app"
+    openshift-mcp:
+      url: "http://kubernetes-mcp-server.mcptest.svc.cluster.local:8080/mcp"
   keybinds:
     commandList: "ctrl+l"
   model: opencode-zen/big-pickle
   small_model: RH-MAAS/llama-4-scout-17b-16e-w4a16
   provider:
     openrouter:
+      options:
+        OPENROUTER_API_KEY: "{env:OPENROUTER_API_KEY}"
       models:
         "moonshotai/kimi-k2":
-          options:
-            provider:
-              order:
-                - "baseten"
-              allowFallbacks: false
+          name: "moonshotai/kimi-k2"
+        "qwen/qwq-32b:free": 
+          name: "qwen/qwq-32b:free"
+        "mistralai/devstral-2512:free": 
+          name: "mistralai/devstral-2512:free"
+        "qwen/qwen3-coder:free": 
+          name: "qwen/qwen3-coder:free"
     opencodeZen:
       baseURL: "https://opencode.ai/zen/v1"
       models:
@@ -118,6 +124,7 @@ envSecrets:
   RH_MAAS_Llama_3_2_3B_Instruct_API_KEY: "placeholder"
   RH_MAAS_URL: "placeholder"
   OPENROUTER_API_KEY: "placeholder"
+  OPENAI_API_BASE: "https://openrouter.ai/api/v1"
 
 # VS Code Editor Config
 vscodeConfig:
