@@ -11,6 +11,7 @@ devworkspace:
 devworkspaceTemplate:
   name: opencode-devspace-template
   generation: 1
+  install: false
 
 # Container resources
 resources:
@@ -49,69 +50,82 @@ urls:
 opencodeConfig:
   autoupdate: false
   instructions:
-    - "AGENTS.md"
-    - "docs/guidelines.md"
-  enabledProviders:
-    - "RH-MAAS"
-    - "LLAMASTACK"
-    - "opencode-zen"
-    - "openrouter"
+    - AGENTS.md
+    - docs/guidelines.md
+  enabled_providers:
+    - RH-MAAS
+    - LLAMASTACK
+    - opencode-zen
+    - openrouter
   mcp:
-    remoteSkills:
-      url: "{env:CLAUDE_SKILLS_MCP_URL}"
-      enabled: true
+    remote-skills:
+      type: remote
+      url: '{env:CLAUDE_SKILLS_MCP_URL}'
+      enabled: 'true'
     context7:
-      url: "https://mcp.context7.com/mcp"
-      apiKey: "{env:CONTEXT7_API_KEY}"
-    ghGrep:
-      url: "https://mcp.grep.app"
+      type: remote
+      url: 'https://mcp.context7.com/mcp'
+      headers:
+        CONTEXT7_API_KEY: '{env:CONTEXT7_API_KEY}'
+    gh_grep:
+      type: remote
+      url: 'https://mcp.grep.app'
     openshift-mcp:
-      url: "http://kubernetes-mcp-server.mcptest.svc.cluster.local:8080/mcp"
+      type: remote
+      url: 'http://kubernetes-mcp-server.mcptest.svc.cluster.local:8080/mcp'
+    prometheus-mcp:
+      type: remote
+      url: 'http://prom-mcp.skills.svc.cluster.local:8080/mcp'
   keybinds:
-    commandList: "ctrl+l"
-  model: opencode-zen/big-pickle
-  small_model: RH-MAAS/llama-4-scout-17b-16e-w4a16
+    command_list: ctrl+l
   provider:
     openrouter:
       options:
-        OPENROUTER_API_KEY: "{env:OPENROUTER_API_KEY}"
+        OPENROUTER_API_KEY: '{env:OPENROUTER_API_KEY}'
       models:
-        "moonshotai/kimi-k2":
-          name: "moonshotai/kimi-k2"
-        "qwen/qwq-32b:free": 
-          name: "qwen/qwq-32b:free"
-        "mistralai/devstral-2512:free": 
-          name: "mistralai/devstral-2512:free"
-        "qwen/qwen3-coder:free": 
-          name: "qwen/qwen3-coder:free"
-    opencodeZen:
-      baseURL: "https://opencode.ai/zen/v1"
+        moonshotai/kimi-k2:
+          options:
+            provider:
+              order:
+                - baseten
+              allow_fallbacks: false
+    opencode-zen:
+      npm: '@ai-sdk/openai-compatible'
+      name: opencode-zen
+      options:
+        baseURL: 'https://opencode.ai/zen/v1'
       models:
-        bigPickle:
-          name: "big-pickle"
-        glm47Free:
-          name: "glm-4.7-free"
-        grokCode:
-          name: "grok-code"
-    rhMaas:
-      baseURL: "{env:RH_MAAS_URL}"
-      apiKey: "{env:RH_MAAS_Llama_3_2_3B_Instruct_API_KEY}"
+        big-pickle:
+          name: big-pickle
+        glm-4.7-free:
+          name: glm-4.7-free
+        grok-code:
+          name: grok-code
+    RH-MAAS:
+      npm: '@ai-sdk/openai-compatible'
+      name: RH-MAAS-Llama-3.2-3B-Instruct
+      options:
+        baseURL: '{env:RH_MAAS_URL}'
+        apiKey: '{env:RH_MAAS_Llama_3_2_3B_Instruct_API_KEY}'
       models:
-        llama32_3b:
-          name: "llama-3-2-3b"
+        llama-3-2-3b:
+          name: llama-3-2-3b
           limit:
             context: 120000
             output: 120000
-    llamastack:
-      baseURL: "{env:OPENCODE_LLS_URL}"
+    LLAMASTACK:
+      npm: '@ai-sdk/openai-compatible'
+      name: llama-stack
+      options:
+        baseURL: '{env:OPENCODE_LLS_URL}'
       models:
-        llama4Scout:
-          name: "llama-4-scout-17b-16e-w4a16"
+        llama-4-scout-17b-16e-w4a16:
+          name: llama-4-scout-17b-16e-w4a16
           limit:
             context: 120000
             output: 120000
-        phi4:
-          name: "microsoft/phi-4"
+        microsoft/phi-4:
+          name: microsoft/phi-4
           limit:
             context: 120000
             output: 120000

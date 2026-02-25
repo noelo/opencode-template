@@ -14,7 +14,8 @@ metadata:
       factory:
         params: >-
           che-editor=che-incubator/che-code/latest&storageType=per-user&url={{ .Values.urls.cheDashboard }}/dashboard/devfile-registry/devfiles/empty.yaml
-  name: {{ .Values.devworkspace.name }}
+  namespace: {{ Release.Namespace }}
+  name: {{ .Values.devworkspace.namespace }}
 spec:
   contributions:
   - kubernetes:

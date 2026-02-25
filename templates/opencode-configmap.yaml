@@ -10,3 +10,4 @@ metadata:
     controller.devfile.io/mount-to-devworkspace: "true"
     controller.devfile.io/watch-configmap: "true"
   name: opencode-config
+  namespace: {{ Release.Namespace }}
