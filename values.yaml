@@ -2,16 +2,16 @@
 
 # DevWorkspace configuration
 devworkspace:
-  name: opencode-devspace
-  namespace: openshift-operators
+  name: opencode-dsp
   routingClass: che
-  started: false
+  started: true
 
 # DevWorkspace Template configuration
 devworkspaceTemplate:
-  name: opencode-devspace-template
+  name: opencode-dsp-tpl
+  namespace: openshift-operators
   generation: 1
-  install: false
+  install: true
 
 # Container resources
 resources:
@@ -33,16 +33,17 @@ resources:
 
 # Images
 images:
-  tooling: quay.io/noeloc/opencode:latest
+  tooling: quay.io/noeloc/opencode:latest-experiment
   cheCodeInjector: registry.redhat.io/devspaces/code-rhel9@sha256:7b68bf06abf4f2b948d21ffa82401b44f26965b093e4875653344ae2b7fe46c8
   cheCodeRuntime: registry.redhat.io/devspaces/udi-rhel9@sha256:bb5baa05f316944ca6df56ad718c368b248e8f4b2488551549b1b13c4ed5844b
 
 # URLs and configuration
 urls:
-  cheDashboard: https://devspaces.apps.example.com
-  chePluginRegistry: https://devspaces.apps.example.com/plugin-registry/v3
+  devspacesURL: https://devspaces.apps.snoai.example.com
+  cheDashboard: https://devspaces.apps.snoai.example.com
+  chePluginRegistry: https://devspaces.apps.snoai.example.com/plugin-registry/v3
   chePluginRegistryInternal: http://plugin-registry.openshift-operators.svc:8080/v3
-  clusterConsole: https://console-openshift-console.apps.example.com
+  clusterConsole: https://console-openshift-console.apps.snoai.example.com
   clusterConsoleTitle: OpenShift console
   openvsxRegistry: ""
 
@@ -61,7 +62,6 @@ opencodeConfig:
     remote-skills:
       type: remote
       url: '{env:CLAUDE_SKILLS_MCP_URL}'
-      enabled: 'true'
     context7:
       type: remote
       url: 'https://mcp.context7.com/mcp'
@@ -132,13 +132,12 @@ opencodeConfig:
 
 # Environment variables for secret
 envSecrets:
-  CLAUDE_SKILLS_MCP_URL: "placeholder"
-  CONTEXT7_API_KEY: "placeholder"
-  OPENCODE_LLS_URL: "placeholder"
-  RH_MAAS_Llama_3_2_3B_Instruct_API_KEY: "placeholder"
-  RH_MAAS_URL: "placeholder"
-  OPENROUTER_API_KEY: "placeholder"
-  OPENAI_API_BASE: "https://openrouter.ai/api/v1"
+  CLAUDE_SKILLS_MCP_URL: http://claude-skills-mcp-backend-skills.apps.example.com/mcp
+  CONTEXT7_API_KEY: ctx7sk-e266f6asdfsdfsdf
+  OPENCODE_LLS_URL: http://llama-stack-service-opencode.apps.example.com/v1/openai/v1
+  RH_MAAS_Llama_3_2_3B_Instruct_API_KEY: 64509asdfsdfsdf
+  RH_MAAS_URL: https://llama-production.apps.example.com:443/v1
+  OPENROUTER_API_KEY: scvccfdgdfg
 
 # VS Code Editor Config
 vscodeConfig:
@@ -168,4 +167,4 @@ gitSshKey:
     host *
       IdentityFile /etc/ssh/dwo_ssh_key
       StrictHostKeyChecking = no
-  enabled: false
+  enabled: true

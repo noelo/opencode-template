@@ -6,7 +6,7 @@ metadata:
     che.eclipse.org/components-update-policy: managed
     che.eclipse.org/plugin-registry-url: {{ .Values.urls.cheDashboard }}/dashboard/api/editors/devfile?che-editor=che-incubator/che-code/latest
   generation: {{ .Values.devworkspaceTemplate.generation }}
-  name: {{ .Values.devworkspaceTemplate.name }}
+  name: {{.Values.devworkspaceTemplate.name}}-{{.Release.Namespace}}
 spec:
   commands:
   - apply:

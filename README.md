@@ -44,3 +44,9 @@ The containerfile is at https://github.com/noelo/web-terminal/blob/main/Containe
 ## How to use
 
 Open a terminal by pressing the keys "ctrl-shift-c" and then type "opencode"
+
+
+
+## How to install
+
+helm install -f opencode-template/values.yaml test2 ./opencode-template -n admin2-devspaces --set gitSshKey.enabled=true --set-file gitSshKey.sshKey=/home/noelo/.ssh/id_github_workspaces --set gitSshKey.passphrase=thisisfake --set-file gitSshKey.sshKeyPub=/home/noelo/.ssh/id_github_workspaces.pub
