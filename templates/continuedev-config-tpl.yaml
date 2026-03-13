@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    controller.devfile.io/mount-path: /home/user/continuedev/config-map
+  labels:
+    controller.devfile.io/mount-to-devworkspace: "true"
+    controller.devfile.io/watch-configmap: "true"
+  name: continuedev-configurations
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yaml: |
+{{ .Files.Get "continuedev-config.yaml" | indent 4 }}
+immutable: false

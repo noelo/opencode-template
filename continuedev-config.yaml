@@ -1,0 +1,22 @@
+name: Local Assistant  
+version: 1.0.0  
+schema: v1  
+models:  
+  - name: kimi-k2-5 
+    provider: openai  
+    model: kimi-k2-5  
+    apiBase: '${{ secrets.TMM_MAAS_KIMI_URL }}'
+    apiKey: '${{ secrets.TMM_MAAS_API_KEY }}'
+    roles:  
+      - chat  
+      - edit  
+      - autocomplete  
+      - apply  
+      - summarize  
+  - name: embeddingsProvider    
+    model: nomic-embed-text  
+    provider: openai   
+    apiBase: '${{ secrets.DEMODOT_MAAS_URL}}'
+    apiKey: '${{ secrets.DEMODOT_MAAS_KEY}}'
+    roles:  
+      - embed

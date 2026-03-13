@@ -1,0 +1,180 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "autoupdate": false,
+    "enabled_providers": [
+        "RH-MAAS",
+        "LLAMASTACK",
+        "opencode-zen",
+        "openrouter",
+        "tmm-maas_kimi",
+        "tmm-maas_qwen"
+    ],
+    "instructions": [
+        "AGENTS.md",
+        "docs/guidelines.md"
+    ],
+    "keybinds": {
+        "command_list": "ctrl+l"
+    },
+    "lsp": {
+        "python": {
+            "command": [
+                "pylsp"
+            ],
+            "extensions": [
+                ".py"
+            ]
+        }
+    },
+    "mcp": {
+        "context7": {
+            "headers": {
+                "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+            },
+            "type": "remote",
+            "url": "https://mcp.context7.com/mcp"
+        },
+        "gh_grep": {
+            "type": "remote",
+            "url": "https://mcp.grep.app"
+        },
+        "openshift-mcp": {
+            "type": "remote",
+            "url": "http://kubernetes-mcp-server.mcptest.svc.cluster.local:8080/mcp"
+        },
+        "prometheus-mcp": {
+            "type": "remote",
+            "url": "http://prom-mcp.skills.svc.cluster.local:8080/mcp"
+        },
+        "remote-skills": {
+            "type": "remote",
+            "url": "{env:CLAUDE_SKILLS_MCP_URL}"
+        }
+    },
+    "model": "tmm-maas_kimi/kimi-k2-5",
+    "provider": {
+        "LLAMASTACK": {
+            "models": {
+                "llama-4-scout-17b-16e-w4a16": {
+                    "limit": {
+                        "context": 120000,
+                        "output": 120000
+                    },
+                    "name": "llama-4-scout-17b-16e-w4a16"
+                },
+                "microsoft/phi-4": {
+                    "limit": {
+                        "context": 120000,
+                        "output": 120000
+                    },
+                    "name": "microsoft/phi-4"
+                }
+            },
+            "name": "llama-stack",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "{env:OPENCODE_LLS_URL}"
+            }
+        },
+        "RH-LITE-MAAS": {
+            "models": {
+                "qwen3-14b": {
+                    "limit": {
+                        "context": 120000,
+                        "output": 120000
+                    },
+                    "name": "qwen3-14b"
+                }
+            },
+            "name": "RH-LITE-MAAS-qwen3-14b",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "apiKey": "{env:RH_LITE_MASS_KEY}",
+                "baseURL": "{env:RH_LITE_MASS_URL}"
+            }
+        },
+        "RH-MAAS": {
+            "models": {
+                "llama-3-2-3b": {
+                    "limit": {
+                        "context": 120000,
+                        "output": 120000
+                    },
+                    "name": "llama-3-2-3b"
+                }
+            },
+            "name": "RH-MAAS-Llama-3.2-3B-Instruct",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "apiKey": "{env:RH_MAAS_Llama_3_2_3B_Instruct_API_KEY}",
+                "baseURL": "{env:RH_MAAS_URL}"
+            }
+        },
+        "opencode-zen": {
+            "models": {
+                "big-pickle": {
+                    "name": "big-pickle"
+                },
+                "glm-4.7-free": {
+                    "name": "glm-4.7-free"
+                },
+                "grok-code": {
+                    "name": "grok-code"
+                }
+            },
+            "name": "opencode-zen",
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+                "baseURL": "https://opencode.ai/zen/v1"
+            }
+        },
+        "openrouter": {
+            "models": {
+                "moonshotai/kimi-k2": {
+                    "options": {
+                        "provider": {
+                            "allow_fallbacks": false,
+                            "order": [
+                                "baseten"
+                            ]
+                        }
+                    }
+                }
+            },
+            "options": {
+                "OPENROUTER_API_KEY": "{env:OPENROUTER_API_KEY}"
+            }
+        },
+        "tmm-maas_kimi": {
+            "models": {
+                "kimi-k2-5": {
+                    "limit": {
+                        "context": 100000,
+                        "output": 100000
+                    },
+                    "name": "kimi-k2-5"
+                }
+            },
+            "options": {
+                "apiKey": "{env:TMM_MAAS_API_KEY}",
+                "baseURL": "{env:TMM_MAAS_KIMI_URL}"
+            }
+        },
+        "tmm-maas_qwen": {
+            "models": {
+                "Qwen3.5-9B": {
+                    "limit": {
+                        "context": 100000,
+                        "output": 100000
+                    },
+                    "name": "qwen/qwen3.5-9B"
+                }
+            },
+            "options": {
+                "apiKey": "{env:TMM_MAAS_API_KEY}",
+                "baseURL": "{env:TMM_MAAS_QWEN_URL}"
+            }
+        }
+    },
+    "small_model": "tmm-maas_qwen/Qwen3.5-9B"
+}
