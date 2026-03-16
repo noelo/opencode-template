@@ -162,12 +162,12 @@
         },
         "tmm-maas_qwen": {
             "models": {
-                "Qwen3.5-9B": {
+                "qwen35-9b": {
                     "limit": {
                         "context": 100000,
                         "output": 100000
                     },
-                    "name": "qwen/qwen3.5-9B"
+                    "name": "qwen35-9b"
                 }
             },
             "options": {
@@ -176,5 +176,5 @@
             }
         }
     },
-    "small_model": "tmm-maas_qwen/Qwen3.5-9B"
+    "small_model": "tmm-maas_qwen/qwen35-9b"
 }
