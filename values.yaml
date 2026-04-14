@@ -63,14 +63,14 @@ vscodeConfig:
     - "github.vscode-pull-request-github"
   settings:
     gitDefaultCloneDirectory: "/projects/"
-    windowHeader: "OpenCode Agentic AI Command Line Interface"
+    windowHeader: "Agentic AI Developer Environment"
     windowCommandCenter: false
     terminalIntegratedDefaultLocation: "editor"
     terminalIntegratedConfirmOnExit: "always"
     terminalIntegratedCwd: "/projects"
     terminalIntegratedDefaultProfileLinux: "bash (2)"
     workbenchColorCustomizations:
-      titleBarActiveBackground: "#CCA700"
+      titleBarActiveBackground: "#5F0000"
       titleBarActiveForeground: "#ffffff"
 
 # Git SSH Key Secret configuration
